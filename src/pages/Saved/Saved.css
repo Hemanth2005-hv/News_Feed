@@ -1,0 +1,16 @@
+/* ---------- Saved Page ---------- */
+
+.saved-empty {
+  border: 1.5px dashed var(--border);
+  box-shadow: none;
+}
+
+.saved-empty:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.saved-empty-icon {
+  font-size: 3rem;
+  color: var(--primary-light);
+}

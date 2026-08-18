@@ -1,0 +1,192 @@
+/* ---------- Auth pages (shared shell) ---------- */
+
+.auth-page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-brand {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.auth-brand-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.auth-brand h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.auth-brand p {
+  font-size: 0.95rem;
+}
+
+/* Inputs with icons */
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input {
+  padding-left: 2.6rem;
+  padding-right: 2.75rem;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.05rem;
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.auth-eye {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  font-size: 1rem;
+  color: var(--text-light);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition);
+}
+
+.auth-eye:hover {
+  color: var(--text);
+}
+
+/* Alert boxes */
+.auth-error,
+.auth-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.auth-error {
+  color: #b91c1c;
+  background: var(--danger-bg);
+  border: 1px solid #fecaca;
+}
+
+[data-theme='dark'] .auth-error {
+  color: #fca5a5;
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+.auth-notice {
+  color: #1d4ed8;
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-border);
+}
+
+.auth-error svg,
+.auth-notice svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* Row: remember me + forgot password link */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.auth-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.auth-checkbox input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--primary);
+}
+
+.auth-link {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.auth-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Submit button + spinner */
+.auth-submit {
+  margin-bottom: 1.5rem;
+}
+
+.auth-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Success panel (forgot password) */
+.auth-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.auth-success-icon {
+  font-size: 3rem;
+  color: var(--success);
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.25rem;
+  }
+}
