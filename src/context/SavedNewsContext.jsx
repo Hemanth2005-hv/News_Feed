@@ -4,19 +4,25 @@ const SavedNewsContext = createContext(null)
 
 // Shared bookmark state — any NewsCard can toggle a save and the
 // Saved page sees the result immediately, no matter which page saved it.
+// We keep the article itself (not just its id) so a bookmark stays readable
+// even after the live feed rotates that story out on an hourly refresh.
 export function SavedNewsProvider({ children }) {
-  const [savedIds, setSavedIds] = useState([])
+  const [savedArticles, setSavedArticles] = useState([])
 
-  const toggleSave = (id) => {
-    setSavedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+  const toggleSave = (article) => {
+    setSavedArticles((prev) =>
+      prev.some((item) => item.id === article.id)
+        ? prev.filter((item) => item.id !== article.id)
+        : [article, ...prev],
     )
   }
 
-  const isSaved = (id) => savedIds.includes(id)
+  const isSaved = (id) => savedArticles.some((item) => item.id === id)
 
   return (
-    <SavedNewsContext.Provider value={{ savedIds, toggleSave, isSaved }}>
+    <SavedNewsContext.Provider
+      value={{ savedArticles, savedIds: savedArticles.map((a) => a.id), toggleSave, isSaved }}
+    >
       {children}
     </SavedNewsContext.Provider>
   )

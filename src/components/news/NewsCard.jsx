@@ -3,7 +3,7 @@ import { FiClock } from 'react-icons/fi'
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa'
 import SmartImage from '../common/SmartImage'
 import { useSavedNews } from '../../context/SavedNewsContext'
-import { formatDate } from '../../utils/format'
+import { formatRelativeTime } from '../../utils/format'
 import './NewsCard.css'
 
 // Animation variants — the grid staggers cards by driving these states
@@ -13,7 +13,7 @@ const cardVariants = {
 }
 
 function NewsCard({ article }) {
-  // Saved state now lives in shared context (SavedNewsContext)
+  // Saved state lives in shared context (SavedNewsContext)
   const { isSaved, toggleSave } = useSavedNews()
   const saved = isSaved(article.id)
 
@@ -38,10 +38,20 @@ function NewsCard({ article }) {
 
       {/* Text area */}
       <div className="news-card-body">
-        <h3 className="news-card-title">{article.title}</h3>
+        <h3 className="news-card-title">
+          {/* The overlay link makes the whole card open the publisher's story */}
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="news-card-link"
+          >
+            {article.title}
+          </a>
+        </h3>
         <p className="news-card-desc">{article.description}</p>
 
-        {/* Footer: source + date (left), save button (right) */}
+        {/* Footer: publisher + freshness (left), save button (right) */}
         <div className="news-card-footer">
           <div className="news-card-meta">
             {article.source && (
@@ -51,7 +61,7 @@ function NewsCard({ article }) {
               <>
                 <span className="news-card-meta-dot">·</span>
                 <span className="news-card-date">
-                  <FiClock /> {formatDate(article.publishedAt)}
+                  <FiClock /> {formatRelativeTime(article.publishedAt)}
                 </span>
               </>
             )}
@@ -59,7 +69,7 @@ function NewsCard({ article }) {
 
           <button
             className={saved ? 'news-card-save saved' : 'news-card-save'}
-            onClick={() => toggleSave(article.id)}
+            onClick={() => toggleSave(article)}
             aria-label={saved ? 'Remove from saved' : 'Save article'}
             title={saved ? 'Remove from saved' : 'Save article'}
           >

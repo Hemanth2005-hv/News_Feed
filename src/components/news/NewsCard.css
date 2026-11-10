@@ -1,11 +1,26 @@
 /* ---------- News Card ---------- */
 
 .news-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
   cursor: pointer;
+}
+
+/* The title link paints an invisible overlay so the whole card opens the
+   original article, while the bookmark button stays clickable on top. */
+.news-card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.news-card-link,
+.news-card-link:hover {
+  color: inherit;
 }
 
 /* Image area */
@@ -113,6 +128,8 @@
 
 /* Save (bookmark) button */
 .news-card-save {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;

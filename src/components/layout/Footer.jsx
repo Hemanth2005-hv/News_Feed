@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IoNewspaperOutline } from 'react-icons/io5'
-import { categories } from '../../data/news'
+import { useNews } from '../../context/NewsContext'
 import './Footer.css'
 
 const quickLinks = [
@@ -11,6 +11,9 @@ const quickLinks = [
 ]
 
 function Footer() {
+  // Category list follows whatever the live feed is currently publishing
+  const { categories } = useNews()
+
   return (
     <footer className="footer">
       <div className="container footer-inner">

@@ -10,3 +10,31 @@ export function formatDate(dateString) {
     year: 'numeric',
   })
 }
+
+// "4:15 PM" — used for the "Updated …" live indicator
+export function formatTime(dateString) {
+  if (!dateString) return ''
+  return new Date(dateString).toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}
+
+// Fresh news reads better as "12m ago" / "3h ago" than as a calendar date.
+export function formatRelativeTime(dateString) {
+  if (!dateString) return ''
+  const time = new Date(dateString).getTime()
+  if (Number.isNaN(time)) return ''
+
+  const minutes = Math.floor((Date.now() - time) / 60000)
+  if (minutes < 1) return 'Just now'
+  if (minutes < 60) return `${minutes}m ago`
+
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days}d ago`
+
+  return formatDate(dateString)
+}

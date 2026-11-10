@@ -3,20 +3,22 @@ import { motion } from 'framer-motion'
 import { FiSearch, FiX } from 'react-icons/fi'
 import NewsGrid from '../../components/news/NewsGrid'
 import CategoryChips from '../../components/common/CategoryChips'
-import { newsArticles, categories } from '../../data/news'
+import LiveStatus from '../../components/common/LiveStatus'
+import { useNews } from '../../context/NewsContext'
 import './Explore.css'
 
 function Explore() {
+  const { articles, categories, loading, error, refresh, refreshing } = useNews()
   // What the user typed in the search bar
   const [query, setQuery] = useState('')
   // Currently selected category chip
   const [activeCategory, setActiveCategory] = useState('All')
 
-  // useMemo: only re-run the filter when query or category actually changes
+  // useMemo: only re-run the filter when the data, query or category changes
   const filteredArticles = useMemo(() => {
     const q = query.trim().toLowerCase()
 
-    return newsArticles.filter((article) => {
+    return articles.filter((article) => {
       const matchesCategory =
         activeCategory === 'All' || article.category === activeCategory
 
@@ -30,7 +32,9 @@ function Explore() {
 
       return matchesCategory && matchesQuery
     })
-  }, [query, activeCategory])
+  }, [articles, query, activeCategory])
+
+  const showSkeletons = loading && articles.length === 0
 
   return (
     <motion.section
@@ -42,7 +46,8 @@ function Explore() {
       <div className="container">
         <div className="section-header explore-header">
           <h1>Explore News</h1>
-          <p>Search across all stories or filter by category.</p>
+          <p>Search today&apos;s reporting from every publisher in the feed.</p>
+          <LiveStatus />
         </div>
 
         {/* Search bar */}
@@ -76,7 +81,25 @@ function Explore() {
         </div>
 
         {/* Results (or empty state) */}
-        {filteredArticles.length > 0 ? (
+        {showSkeletons ? (
+          <div className="loading-state">
+            <span className="spinner" />
+            <p>Fetching the latest headlines…</p>
+          </div>
+        ) : error && articles.length === 0 ? (
+          <div className="error-state">
+            <h3>Live news is unavailable</h3>
+            <p>{error}. The feed retries automatically every hour.</p>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={refresh}
+              disabled={refreshing}
+            >
+              {refreshing ? 'Connecting…' : 'Try again'}
+            </button>
+          </div>
+        ) : filteredArticles.length > 0 ? (
           <NewsGrid articles={filteredArticles} />
         ) : (
           <div className="empty-state explore-empty">

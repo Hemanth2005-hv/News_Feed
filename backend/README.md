@@ -29,7 +29,7 @@ backend/
     │   └── service/      → AuthService, ArticleService, SavedArticleService
     └── resources/
         ├── application.yml
-        └── data.sql      → seeds 12 articles (same as the frontend mock data)
+        └── data.sql      → seeds 12 sample articles (the frontend uses live news)
 ```
 
 ## Setup (do once)
@@ -103,6 +103,6 @@ When the backend is running:
 
 1. Store the token from login/register as `newsfeed_token` in localStorage
    (the axios interceptor attaches it automatically).
-2. Swap the mock data calls in the pages for the `articleApi` / `savedApi` functions.
+2. Swap the `NewsContext` fetch and the mock auth calls for the `articleApi` / `authApi` / `savedApi` functions.
 
 Full integration steps are the final phase of the project plan (Phases 8–9).

@@ -69,6 +69,11 @@
   color: var(--primary);
 }
 
+.trending-link,
+.trending-link:hover {
+  color: inherit;
+}
+
 .trending-meta {
   display: flex;
   align-items: center;

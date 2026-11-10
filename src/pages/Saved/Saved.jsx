@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom'
 import { FiBookmark, FiCompass } from 'react-icons/fi'
 import NewsGrid from '../../components/news/NewsGrid'
 import { useSavedNews } from '../../context/SavedNewsContext'
-import { newsArticles } from '../../data/news'
 import './Saved.css'
 
 function Saved() {
-  // Shared bookmark state — shows articles saved on ANY page
-  const { savedIds } = useSavedNews()
-  const savedArticles = newsArticles.filter((a) => savedIds.includes(a.id))
+  // Shared bookmark state — shows articles saved on ANY page, and keeps the
+  // article even after it rotates out of the hourly live feed.
+  const { savedArticles } = useSavedNews()
 
   return (
     <motion.section

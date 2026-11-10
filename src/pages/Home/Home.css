@@ -144,10 +144,29 @@
 .featured-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.25rem;
   font-size: 0.875rem;
   color: var(--text-light);
+}
+
+.featured-link,
+.featured-link:hover {
+  color: inherit;
+}
+
+.featured-link:hover {
+  color: var(--primary);
+}
+
+.featured-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .featured-source {
