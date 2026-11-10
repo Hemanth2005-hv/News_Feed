@@ -207,7 +207,33 @@ The API starts at **http://localhost:8080/api**. Full endpoint docs: see the
 | `VITE_API_URL` | `http://localhost:8080/api` | Base URL of the Spring Boot API (used by `src/services/api.js`) |
 
 No environment variables are needed for the live news feed — it uses public RSS and a
-same-origin `/api/news` route provided by the Vite dev/preview server.
+same-origin `/api/news` route provided by the Vite dev/preview server locally and by a
+Vercel function in production.
+
+### 3. Deploy on Vercel
+
+The repo is Vercel-ready: [`api/news.js`](api/news.js) serves `/api/news` as a
+serverless function using the same aggregator as local dev, and `vercel.json` builds
+the SPA into `dist/` while keeping client-side routes working. No environment
+variables or API keys are required.
+
+**From the dashboard (recommended):**
+
+1. Push the repository to GitHub.
+2. In Vercel choose **Add New → Project** and import the repository. The Vite
+   framework, build command and output directory come from `vercel.json`.
+3. Click **Deploy**. Every later push to `main` redeploys automatically.
+
+**From the CLI:**
+
+```bash
+npx vercel link
+npx vercel --prod
+```
+
+The first request after a cold start fetches the publishers, so it takes a few seconds;
+serverless instances keep the snapshot in memory (and in `/tmp`) between requests, so
+subsequent loads are immediate.
 
 ---
 

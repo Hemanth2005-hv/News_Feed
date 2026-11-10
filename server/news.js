@@ -1,5 +1,8 @@
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { FEEDS, CATEGORY_ORDER } from './feeds.js'
 
 // ---------------------------------------------------------------------------
@@ -18,7 +21,12 @@ const FRESH_WINDOW_MS = 48 * 60 * 60 * 1000 // "today's news" first
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000 // never older than a week
 const MIN_FRESH_ARTICLES = 40
 const MAX_ARTICLES = 120
-const CACHE_FILE = new URL('../.cache/news.json', import.meta.url)
+// Serverless platforms ship a read-only project directory, so the snapshot
+// goes to the writable temp folder there and next to the server locally.
+const CACHE_DIR = process.env.VERCEL
+  ? join(tmpdir(), 'newsfeed-cache')
+  : fileURLToPath(new URL('../.cache/', import.meta.url))
+const CACHE_FILE = join(CACHE_DIR, 'news.json')
 
 // Some publishers (CNBC, ESPN, Al Jazeera, …) ship no image at all in their
 // RSS. For those articles we read the story page and take its social image.
@@ -468,7 +476,7 @@ async function refresh() {
 /* -------------------------------- caching -------------------------------- */
 
 async function persist(snapshot) {
-  await mkdir(new URL('../.cache/', import.meta.url), { recursive: true })
+  await mkdir(CACHE_DIR, { recursive: true })
   await writeFile(CACHE_FILE, JSON.stringify(snapshot))
 }
 
