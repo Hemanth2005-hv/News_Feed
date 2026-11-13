@@ -111,18 +111,6 @@ the same UI plugs into the REST API for real persistence and JWT authentication.
 
 ---
 
-## 📸 Screenshots
-
-| Home — Light | Home — Dark |
-|---|---|
-| ![Home light](screenshots/home-light.png) | ![Home dark](screenshots/home-dark.png) |
-
-| Explore | Trending | Login |
-|---|---|---|
-| ![Explore](screenshots/explore-light.png) | ![Trending](screenshots/trending-light.png) | ![Login](screenshots/login-light.png) |
-
----
-
 ## 🧱 Tech Stack
 
 **Frontend**
